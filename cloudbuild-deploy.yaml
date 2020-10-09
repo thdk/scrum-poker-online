@@ -4,9 +4,6 @@ steps:
   args: ['ci']
 - name: 'node:10-alpine'
   entrypoint: "npm"
-  args: ['run', 'build']
-- name: 'node:10-alpine'
-  entrypoint: "npm"
   args: ['t']
   env:
     - 'CI=true'
