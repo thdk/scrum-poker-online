@@ -1,0 +1,12 @@
+.player-board {
+	display: flex;
+	align-items: center;
+}
+
+.player-board-ranking {
+    font-size: 3em;
+}
+
+.player-board-rank--value {
+	color: #408a12;
+}

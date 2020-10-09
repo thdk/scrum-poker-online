@@ -1,0 +1,12 @@
+.header {
+    display: flex;
+    justify-content: space-evenly;
+    height: 2em;
+    align-items: center;
+    background: #402c2c;
+    color: papayawhip;
+}
+
+.header-tab {
+    cursor: pointer;
+}

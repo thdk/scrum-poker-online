@@ -1,0 +1,19 @@
+.player-form {
+    display: flex;
+    flex-direction: column;
+    justify-items: stretch;
+    height: calc(100vh - 2em);
+}
+
+.player-form-fields {
+    align-items: center;
+}
+
+.form-field {
+    height: 4em;
+}
+
+.share-link{
+    width: 200px;
+    margin-bottom: 1em;
+}
