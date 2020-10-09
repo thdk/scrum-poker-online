@@ -2,6 +2,7 @@ import { PlayerStore } from "../../player/store";
 import { observable, computed, action } from "mobx";
 import Cookie from "mobx-cookie";
 import { ViewStore } from "../../view/store";
+import firebase from "firebase/app";
 
 export type PlayCard = 0 | 1 | 2 | 3 | 5 | 8 | 13 | 20 | 40 | 100 | "coffee" | "?";
 
@@ -24,7 +25,11 @@ export class AppStore {
 	@observable
 	private sessionCodeCookie = new Cookie("session-code");
 
-	constructor() {
+	constructor({
+		firestore,
+	}: {
+		firestore: firebase.firestore.Firestore;
+	}) {
 		const urlParams = new URLSearchParams(window.location.search);
 
 		const sessionFromUrl = urlParams.get("session");
@@ -32,7 +37,12 @@ export class AppStore {
 			this.setSessionCode(sessionFromUrl);
 		}
 
-		this.playerStore = new PlayerStore(this);
+		this.playerStore = new PlayerStore(
+			this,
+			{
+				firestore,
+			},
+		);
 		this.viewStore = new ViewStore();
 	}
 

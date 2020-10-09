@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="header"
+    >
+      <div
+        class="header-tab active"
+      >
+        GAME
+      </div>
+      <div
+        class="header-tab"
+      >
+        SETTINGS
+      </div>
+    </div>
+    <div
+      class="screen welcome"
+    >
+      <div
+        class="player-form"
+      >
+        <div
+          class="player-form-fields content"
+        >
+          <div
+            class="form-field form-field-checkbox"
+          >
+            <div
+              class="form-field-label"
+            >
+              Tv mode
+            </div>
+            <div
+              class="form-field-input"
+            >
+              <input
+                type="checkbox"
+              />
+            </div>
+          </div>
+          <div
+            class="form-field form-field-text"
+          >
+            <div
+              class="form-field-label"
+            >
+              Session code
+            </div>
+            <div
+              class="form-field-input"
+            >
+              <input
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+          <div
+            class="form-field form-field-text"
+          >
+            <div
+              class="form-field-label"
+            >
+              Player name
+            </div>
+            <div
+              class="form-field-input"
+            >
+              <input
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+          <div
+            class="form-field form-field-button"
+          >
+            <div
+              class="form-field-input"
+            >
+              <input
+                type="button"
+                value="Save"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
