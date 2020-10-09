@@ -30,3 +30,5 @@ firebase-debug.log
 
 # vscode
 .vscode/
+
+/cloud-builders-community/
