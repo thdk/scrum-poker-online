@@ -20,7 +20,14 @@ export class PlayerStore {
 
 	private readonly appStore: AppStore;
 
-	constructor(appStore: AppStore) {
+	constructor(
+		appStore: AppStore,
+		{
+			firestore,
+		}: {
+			firestore: firebase.firestore.Firestore,
+		}
+	) {
 		this.appStore = appStore;
 
 		const createQuery = () => {
@@ -29,12 +36,12 @@ export class PlayerStore {
 			return session ?
 				(ref: CollectionReference) =>
 					ref.where("session", "==", session)
-					.where("type", "==", PlayerType.player)
+						.where("type", "==", PlayerType.player)
 				: null;
 		};
 
 		this.collection = new Collection<IPlayer, IPlayerData>(
-			firebase.firestore(),
+			firestore,
 			"players",
 			{
 				query: createQuery(),
@@ -108,7 +115,7 @@ export class PlayerStore {
 				if (playerDoc.data!.session)
 					this.playerDoc = playerDoc;
 				this.validatePlayerSession();
-			},() => {
+			}, () => {
 				this.setPlayerId(undefined);
 			});
 	}

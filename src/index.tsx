@@ -4,16 +4,20 @@ import "./index.css";
 import App from "./components/app";
 import * as serviceWorker from "./serviceWorker";
 import { AppStore } from "./modules/app/store";
-  
+
+import firebase from "firebase/app";
+
 const createStore = () => {
-    const store = new AppStore();
+	const store = new AppStore({
+		firestore: firebase.firestore()
+	});
 
 	// for development purposes only
 	if (process.env.NODE_ENV !== "production") {
 		(window as any)["store"] = store;
 	}
 
-    return store;
+	return store;
 };
 
 export type Store = ReturnType<typeof createStore>;
