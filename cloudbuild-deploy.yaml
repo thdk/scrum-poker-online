@@ -13,4 +13,7 @@ steps:
     - 'FIRESTORE_EMULATOR_HOST=localhost:8081'
 - name: 'node:10-alpine'
   entrypoint: "npm"
+  args: ['i', '-g', 'firebase-tools']
+- name: 'node:10-alpine'
+  entrypoint: "npm"
   args: ['run', 'deploy', "--", "--project", "$_FIREBASE_PROJECT_ID", "--token", "$_FIREBASE_TOKEN"]
