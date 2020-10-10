@@ -1,10 +1,12 @@
-## Example using [firestorable](https://github.com/thdk/firestorable): Scrum poker online multiplayer
+## Scrum poker online
+
+![Cloud Build](https://storage.googleapis.com/scrum-poker-online-badges/builds/scrum-poker-online/branches/master.svg)
 
 Play scrum poker online with your scrum team. Simply join an existing session or create a new session code and share it with your team members.
 
-See the **source code** of this example or open the [**online demo**](https://scrum-poker-31315.web.app/) of this example.
+[**Start playing scrum poker here**](https://scrum-poker-31315.web.app/)
 
-The main goal of this repo is to demonstrate the use of [firestorable](https://github.com/thdk/firestorable).
+Build with [firestorable](https://github.com/thdk/firestorable).
 
 ![screensot](images/screenshots.gif)
 
