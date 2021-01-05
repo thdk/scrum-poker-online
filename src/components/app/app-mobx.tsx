@@ -52,7 +52,7 @@ const AppMobx = ({
 		);
 	}
 
-	return <App screen={player && !isEditMode ? "game" : "settings"} />;
+	return <App screen={player?.session && !isEditMode ? "game" : "settings"} />;
 };
 
 export default observer(AppMobx);
