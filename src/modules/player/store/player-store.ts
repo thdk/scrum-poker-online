@@ -1,161 +1,101 @@
-import { Collection, CollectionReference, Doc } from "firestorable";
-import firebase from "firebase/app";
-import { computed, observable, reaction, action } from "mobx";
-import MobxCookie from "mobx-cookie";
+import { CrudStore, RealtimeMode } from "firestorable";
+import { computed, reaction } from "mobx";
 
 import { AppStore, sortCards } from "../../app/store";
-import { IPlayer, IPlayerData, PlayerType } from "../types";
-import { serializePlayer } from "../serialization/serializer";
 import { deserializePlayer } from "../serialization/deserializer";
-import { getSessionCode } from "../../app/selectors";
+import { serializePlayer } from "../serialization/serializer";
+import { IPlayer, IPlayerData, PlayerType } from "../types";
 
-export class PlayerStore {
-	public collection: Collection<IPlayer, IPlayerData>;
-
-	@observable
-	private playerIdCookie = new MobxCookie("player-id");
-
-	@observable.ref
-	private playerDoc?: Doc<IPlayer>;
-
+export class PlayerStore extends CrudStore<IPlayer, IPlayerData> {
 	private readonly appStore: AppStore;
-
 	constructor(
 		appStore: AppStore,
-		{
-			firestore,
-		}: {
-			firestore: firebase.firestore.Firestore,
-		}
+		firestore: firebase.firestore.Firestore,
 	) {
-		this.appStore = appStore;
-
-		const createQuery = () => {
-			const session = getSessionCode(appStore);
-
-			return session ?
-				(ref: CollectionReference) =>
-					ref.where("session", "==", session)
-						.where("type", "==", PlayerType.player)
-				: null;
-		};
-
-		this.collection = new Collection<IPlayer, IPlayerData>(
-			firestore,
-			"players",
-			{
-				query: createQuery(),
-				serialize: serializePlayer,
+		super({
+			collection: "players",
+			collectionOptions: {
 				deserialize: deserializePlayer,
+				serialize: serializePlayer,
+				realtimeMode: RealtimeMode.on,
 			},
-		);
-
-		reaction(() => getSessionCode(appStore), () => {
-			this.collection.query = createQuery();
+		}, {
+			firestore,
 		});
 
-		reaction(
-			() => this.playerId,
-			id => {
-				id && this.getPlayerAsync(id);
-			},
-			{
-				fireImmediately: true,
-			},
-		);
+		this.appStore = appStore;
+
+		reaction(() => this.playerId, (playerId) => {
+			this.appStore.authStore.collection.query = playerId !== undefined
+				? (ref) => ref.where("uid", "==", playerId)
+				: null;
+		});
+
+		reaction(() => this.player, (player) => {
+			this.collection.query = player.session !== undefined
+				? (ref) => ref.where("session", "==", player.session)
+				: null;
+		});
 	}
 
 	@computed
 	private get playerId() {
-		return this.playerIdCookie.value;
-	}
-
-	@action
-	private setPlayerId(value: string | undefined) {
-		if (value) {
-			this.playerIdCookie.set(value);
-		} else {
-			this.playerIdCookie.remove();
-		}
+		return this.appStore.authStore.activeDocumentId;
 	}
 
 	@computed
-	public get allPlayers() {
-		return this.collection.docs;
+	public get fieldPlayers() {
+		return this.collection.docs
+			.filter(d => d.data?.type === PlayerType.player
+				&& !d.data?.isSparePlayer
+			);
 	}
 
-	@computed get allPlayersSorted() {
-		if (this.isWaitingForplayer)
-			return this.allPlayers;
+	public get sparePlayers() {
+		return this.collection.docs
+			.filter(d => d.data?.type === PlayerType.player
+				&& d.data?.isSparePlayer
+			)
+			.map(doc => doc.data!);
+	}
 
-		return this.allPlayers.sort((a, b) => sortCards(a.data!.value!, b.data!.value!));
+	@computed get fieldPlayersSorted() {
+		if (this.isWaitingForPlayer)
+			return this.fieldPlayers;
+
+		return this.fieldPlayers.sort((a, b) => sortCards(a.data!.value!, b.data!.value!));
 	}
 
 	@computed
 	public get player() {
-		const playerDoc = this.playerDoc;
-
-		return playerDoc && playerDoc.data;
+		// TODO: firestorable should have a watch flag for active document?
+		return this.appStore.authStore.collection.docs
+			.find(d => d.id === this.appStore.authStore.activeDocumentId)?.data as IPlayer;
 	}
 
 	@computed
-	public get isWaitingForplayer() {
-		return this.allPlayers.some(p => p.data!.value === undefined);
+	public get isWaitingForPlayer() {
+		return this.fieldPlayers
+			.filter(player => !player.data!.isSparePlayer)
+			.some(p => p.data!.value === undefined);
 	}
 
-	public savePlayer(data: IPlayer) {
-		this.player
-			? this.updatePlayerAsync(data)
-			: this.createPlayerAsync(data);
-	}
-
-	private getPlayerAsync(id: string) {
-		this.collection.getAsync(id, { watch: true })
-			.then(playerDoc => {
-				if (playerDoc.data!.session)
-					this.playerDoc = playerDoc;
-				this.validatePlayerSession();
-			}, () => {
-				this.setPlayerId(undefined);
-			});
-	}
-
-	private validatePlayerSession() {
-		const currentSessionCode = getSessionCode(this.appStore)
-		if (this.player && (
-			this.player.value !== undefined // Reset any value from the previous session
-			|| (currentSessionCode && this.player.session !== currentSessionCode)) // Reset the players session to the current session
-		) {
-			this.updatePlayerAsync({
-				session: currentSessionCode,
-				value: undefined
-			});
-		}
-	}
-
-	public createPlayerAsync(player: IPlayer) {
-		this.appStore.setSessionCode(player.session);
-
-		return this.collection.addAsync(player)
-			.then(this.setPlayerId.bind(this));
+	public savePlayer(data: Partial<IPlayer>) {
+		this.updatePlayerAsync(data);
 	}
 
 	public updatePlayerAsync(player: Partial<IPlayer>) {
-		if (player.session) {
-			this.appStore.setSessionCode(player.session);
-		}
-
 		return (this.player && this.playerId)
-			? this.collection.updateAsync(player, this.playerId)
+			? this.appStore.authStore.updateDocument(player, this.playerId)
 			: Promise.reject(new Error("No player set"));
 	}
 
 	public restart() {
-		this.collection.updateAsync(
+		this.appStore.authStore.collection.updateAsync(
 			{
 				value: undefined,
 			},
-			...this.collection.docs.map(p => p.id),
+			...this.fieldPlayers.map(p => p.id),
 		)
 	}
 }

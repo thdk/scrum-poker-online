@@ -6,10 +6,12 @@ import * as serviceWorker from "./serviceWorker";
 import { AppStore } from "./modules/app/store";
 
 import firebase from "firebase/app";
+import "firebase/auth";
 
 const createStore = () => {
 	const store = new AppStore({
-		firestore: firebase.firestore()
+		firestore: firebase.firestore(),
+		auth: firebase.auth(),
 	});
 
 	// for development purposes only
@@ -24,7 +26,13 @@ export type Store = ReturnType<typeof createStore>;
 
 export const StoreContext = React.createContext(createStore());
 
-ReactDOM.render(<App />, document.getElementById("root"));
+const urlParams = new URLSearchParams(window.location.search);
+
+const sessionFromUrl = urlParams.get("session");
+
+ReactDOM.render(<App 
+	sessionFromUrl={sessionFromUrl || undefined}
+/>, document.getElementById("root"));
 
 // if you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

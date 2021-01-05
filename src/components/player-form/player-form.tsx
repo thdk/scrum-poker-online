@@ -5,10 +5,11 @@ import copy from 'copy-to-clipboard';
 
 import { Content } from "../content";
 import { FormField } from "../form-field";
+import firebase from "firebase/app";
 
 export type PlayerFormProps = {
 	player?: Partial<IPlayer>;
-	onSave: (player: IPlayer) => void;
+	onSave: (player: Partial<IPlayer>) => void;
 };
 
 export const PlayerForm = (props: PlayerFormProps) => {
@@ -43,6 +44,10 @@ export const PlayerForm = (props: PlayerFormProps) => {
 		onSave({ name: playerName, type: playertype, session: playerSession.trim() });
 	}, [onSave, playerName, playerSession, playertype]);
 
+
+	const handleLogout = useCallback(() => {
+		firebase.auth().signOut();
+	}, []);
 	const ShareLink = useMemo(() => ({ session }: { session: string }) => {
 		if (!session) return null;
 
@@ -69,6 +74,7 @@ export const PlayerForm = (props: PlayerFormProps) => {
 			<ShareLink session={playerSession} />
 
 			<FormField type="button" value={"Save"} onClick={handleSave} />
+			<FormField type="button" value={"Logout"} onClick={handleLogout} />
 		</Content>
 	</div>;
 };

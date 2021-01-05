@@ -5,7 +5,6 @@ import classNames from "classnames";
 
 import { IPlayer } from "../../modules/player/types";
 import { Content } from "../content";
-import { ContentWrapper } from "../content-wrapper";
 
 import "./player-board.css";
 
@@ -15,14 +14,21 @@ export type PlayerBoardProps = {
 	isWaitingForPlayer: boolean;
 
 	onRestart: () => void;
+	onPlayerClick?: (playerId: string) => void;
 };
 
 export const PlayerBoard = (props: PlayerBoardProps) => {
-	const { isWaitingForPlayer, players, session, onRestart } = props;
+	const {
+		isWaitingForPlayer,
+		players,
+		session,
+		onRestart,
+		onPlayerClick,
+	} = props;
 
 	const handleRestartClick = useCallback(onRestart, [onRestart]);
 
-	return <ContentWrapper>
+	return (
 		<Content className="player-board">
 			<h2>Session: {session}</h2>
 			<div className="player-board-ranking">
@@ -36,7 +42,14 @@ export const PlayerBoard = (props: PlayerBoardProps) => {
 
 						const styles = classNames({ "player-board-rank--value": p.data!.value !== undefined });
 
-						return <div className={styles} key={p.data!.name}>
+						return <div
+							className={styles}
+							key={p.data!.uid}
+							onClick={onPlayerClick
+								? () => onPlayerClick(p.data!.uid)
+								: undefined
+							}
+						>
 							{value} - {p.data!.name}
 						</div>
 					}
@@ -49,5 +62,5 @@ export const PlayerBoard = (props: PlayerBoardProps) => {
 				onClick={handleRestartClick}
 			/>
 		</Content>
-	</ContentWrapper>;
+	);
 };

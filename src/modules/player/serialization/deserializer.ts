@@ -1,12 +1,18 @@
 import { IPlayerData } from "../types";
 
 export function deserializePlayer(player: IPlayerData) {
-	const { value, ...otherProps } = player;
+	const { value, session, ...otherProps } = player;
 	const newValue = value === null || value === undefined
 		? undefined
 		: value;
 
+	const newSession = session === null || session === undefined
+		? undefined
+		: session;
 
-
-	return { ...otherProps, value: newValue };
+	return {
+		...otherProps,
+		value: newValue,
+		session: newSession,
+	};
 }

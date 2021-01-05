@@ -7,15 +7,19 @@ export enum PlayerType {
 
 export interface IPlayer {
 	name?: string;
-	session: string;
+	session?: string;
 	type: PlayerType;
 	value?: PlayCard | null;
+	uid: string;
+	isSparePlayer?: boolean;
 }
 
 
 export interface IPlayerData {
 	name: string;
-	session: string;
+	session: string | null;
 	type: PlayerType;
 	value?: PlayCard | null;
+	uid: string;
+	isSparePlayer?: boolean;
 }

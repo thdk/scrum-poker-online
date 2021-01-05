@@ -1,8 +1,12 @@
 import { PlayerStore } from "../../player/store";
-import { observable, computed, action } from "mobx";
-import Cookie from "mobx-cookie";
 import { ViewStore } from "../../view/store";
 import firebase from "firebase/app";
+import "firebase/auth";
+
+import { AuthStore, RealtimeMode } from "firestorable";
+import { IPlayer } from "../../player/types";
+import { deserializePlayer } from "../../player/serialization/deserializer";
+import { serializePlayer } from "../../player/serialization/serializer";
 
 export type PlayCard = 0 | 1 | 2 | 3 | 5 | 8 | 13 | 20 | 40 | 100 | "coffee" | "?";
 
@@ -21,27 +25,31 @@ export const sortCards = (a: PlayCard, b: PlayCard) => {
 export class AppStore {
 	public playerStore: PlayerStore;
 	public viewStore: ViewStore;
-
-	@observable
-	private sessionCodeCookie = new Cookie("session-code");
+	public authStore: AuthStore<IPlayer>;
 
 	constructor({
 		firestore,
+		auth,
 	}: {
 		firestore: firebase.firestore.Firestore;
+		auth: firebase.auth.Auth;
 	}) {
-		const urlParams = new URLSearchParams(window.location.search);
 
-		const sessionFromUrl = urlParams.get("session");
-		if (sessionFromUrl) {
-			this.setSessionCode(sessionFromUrl);
-		}
+		this.authStore = new AuthStore({
+			firestore,
+			auth,
+		}, {
+			collection: "players",
+			collectionOptions: {
+				realtimeMode: RealtimeMode.on,
+				deserialize: deserializePlayer,
+				serialize: serializePlayer,
+			},
+		});
 
 		this.playerStore = new PlayerStore(
 			this,
-			{
-				firestore,
-			},
+			firestore,
 		);
 		this.viewStore = new ViewStore();
 	}
@@ -51,19 +59,5 @@ export class AppStore {
 		return [
 			0, 1, 2, 3, 5, 8, 13, 20, 40, 100, "coffee", "?",
 		];
-	}
-
-	@computed
-	public get sessionCode() {
-		return this.sessionCodeCookie.value;
-	}
-
-	@action
-	public setSessionCode(value: string | undefined) {
-		if (value) {
-			this.sessionCodeCookie.set(value, { expires: 2 });
-		} else {
-			this.sessionCodeCookie.remove();
-		}
 	}
 }

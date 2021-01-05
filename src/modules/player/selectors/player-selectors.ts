@@ -4,14 +4,18 @@ export function selectPlayer(store: PlayerStore) {
 	return store.player;
 }
 
-export function selectAllPlayers(store: PlayerStore) {
-	return store.allPlayers;
+export function selectFieldPlayers(store: PlayerStore) {
+	return store.fieldPlayers;
 }
 
-export function selectAllPlayersSorted(store: PlayerStore) {
-	return store.allPlayersSorted;
+export function selectSparePlayers(store: PlayerStore) {
+	return store.sparePlayers;
+}
+
+export function selectFieldPlayersSorted(store: PlayerStore) {
+	return store.fieldPlayersSorted;
 }
 
 export function selectIsWaitingForPlayer(store: PlayerStore) {
-	return store.isWaitingForplayer;
+	return store.isWaitingForPlayer;
 }

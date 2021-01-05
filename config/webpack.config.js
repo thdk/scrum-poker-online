@@ -1,4 +1,4 @@
-'use strict';
+
 
 const fs = require('fs');
 const path = require('path');
@@ -137,8 +137,11 @@ module.exports = function(webpackEnv) {
 
   return {
     externals: {
-      'firebase/app': 'firebase',
-      'firebase/firestore': 'firebase.firestore',
+      "firebase": "root firebase",
+      "firebase/app": "root firebase",
+      "firebase/firestore": "root firebase",
+      "firebase/auth": "root firebase",
+      "firebase/functions": "root firebase",
    },
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
     // Stop compilation early in production
