@@ -4,9 +4,6 @@ steps:
   args: ['ci']
 - name: 'node:10-alpine'
   entrypoint: "npm"
-  args: ['t']
-  env:
-    - 'CI=true'
-    - 'FIRESTORE_EMULATOR_HOST=localhost:8081'
+  args: ['run', 'build']
 - name: 'gcr.io/$PROJECT_ID/firebase'
   args: ['deploy', "--project", "$_FIREBASE_PROJECT_ID", "--token", "$_FIREBASE_TOKEN"]
