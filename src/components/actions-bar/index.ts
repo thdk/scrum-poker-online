@@ -1,1 +1,1 @@
-export * from "./actions-bar";
+export * from './actions-bar';

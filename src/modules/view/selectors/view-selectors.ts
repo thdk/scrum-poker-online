@@ -1,5 +1,5 @@
-import { ViewStore } from "../store";
+import { ViewStore } from '../store';
 
 export function selectIsEditMode(store: ViewStore) {
-    return store.isEditMode;
+  return store.isEditMode;
 }

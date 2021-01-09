@@ -1,3 +1,2 @@
-export * from "./player";
-export * from "./app";
-export * from "./view";
+export * from './player';
+export * from './view';

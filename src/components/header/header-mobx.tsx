@@ -1,24 +1,26 @@
-import * as React from "react";
-import { observer } from "mobx-react-lite";
+import * as React from 'react';
+import { observer } from 'mobx-react-lite';
 
-import { Header } from "./header";
-import { getIsEditMode } from "../../modules/app/selectors";
-import { useStore } from "../../hooks";
-import { useCallback } from "react";
+import { useCallback } from 'react';
+import { Header } from './header';
+import { getIsEditMode } from '../../modules/app/selectors';
+import { useStore } from '../../modules/app/store/use-app-store';
 
 const HeaderMobx = () => {
-    const store = useStore();
+  const store = useStore();
 
-    const isEditMode = getIsEditMode(store);
+  const isEditMode = getIsEditMode(store);
 
-    const handleTabClick = useCallback((tab: "game" | "settings") => {
-        store.viewStore.isEditMode = tab === "settings";
-    }, [store.viewStore]);
+  const handleTabClick = useCallback((tab: 'game' | 'settings') => {
+    store.viewStore.isEditMode = tab === 'settings';
+  }, [store.viewStore]);
 
-    return <Header
-        editMode={isEditMode}
-        onTabClick={handleTabClick}
-    />;
+  return (
+    <Header
+      editMode={isEditMode}
+      onTabClick={handleTabClick}
+    />
+  );
 };
 
 export default observer(HeaderMobx);

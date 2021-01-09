@@ -1,1 +1,1 @@
-export { default } from "./app-mobx";
+export { default } from './app-mobx';

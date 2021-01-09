@@ -1,22 +1,26 @@
-import * as React from "react";
-import { PlayCard } from "../../modules/app/store";
+import * as React from 'react';
 
-import "./cards.css";
-import { Card } from "../card/card";
+import './cards.css';
+import { Card } from '../card/card';
+import { PlayCard } from '../../modules/cards/types';
 
 export type CardsProps = {
-	cards: PlayCard[];
-	onCardSelect: (card: PlayCard) => void;
-}
+  cards: PlayCard[];
+  onCardSelect: (card: PlayCard) => void;
+};
 
 export const Cards = (props: CardsProps) => {
-	const { cards, onCardSelect } = props;
+  const { cards, onCardSelect } = props;
 
-	return <div className="cards">
-		{cards.map(c => <Card
-			key={c}
-			onClick={() => onCardSelect(c)}
-			value={c} />
-		)}
-	</div>
+  return (
+    <div className="cards">
+      {cards.map((c) => (
+        <Card
+          key={c}
+          onClick={() => onCardSelect(c)}
+          value={c}
+        />
+      ))}
+    </div>
+  );
 };

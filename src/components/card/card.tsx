@@ -1,15 +1,17 @@
-import * as React from "react";
+import * as React from 'react';
 
-import "./card.css";
+import './card.css';
 
 export type CardProps = {
-	value: any;
-}
+  value: any;
+};
 
 export const Card = (props: CardProps & React.HTMLProps<HTMLDivElement>) => {
-	const { value, ...restProps } = props;
+  const { value, ...restProps } = props;
 
-	return <div className="card-container" {...restProps}>
-		<div className="card">{value}</div>
-	</div>
+  return (
+    <div className="card-container" {...restProps}>
+      <div className="card">{value}</div>
+    </div>
+  );
 };

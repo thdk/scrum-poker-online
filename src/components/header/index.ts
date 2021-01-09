@@ -1,1 +1,1 @@
-export {default} from "./header-mobx";
+export { default } from './header-mobx';
