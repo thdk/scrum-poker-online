@@ -25,12 +25,6 @@ export class PlayerStore extends CrudStore<IPlayer, IPlayerData> {
 
 		this.appStore = appStore;
 
-		reaction(() => this.playerId, (playerId) => {
-			this.appStore.authStore.collection.query = playerId !== undefined
-				? (ref) => ref.where("uid", "==", playerId)
-				: null;
-		});
-
 		reaction(() => this.player, (player) => {
 			this.collection.query = player.session !== undefined
 				? (ref) => ref.where("session", "==", player.session)
@@ -68,9 +62,7 @@ export class PlayerStore extends CrudStore<IPlayer, IPlayerData> {
 
 	@computed
 	public get player() {
-		// TODO: firestorable should have a watch flag for active document?
-		return this.appStore.authStore.collection.docs
-			.find(d => d.id === this.appStore.authStore.activeDocumentId)?.data as IPlayer;
+		return this.appStore.authStore.activeDocument as IPlayer;
 	}
 
 	@computed
