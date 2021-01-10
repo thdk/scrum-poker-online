@@ -3,8 +3,16 @@
     justify-content: space-evenly;
     height: 2em;
     align-items: center;
-    background: #402c2c;
+    background: #402c2c;    
+}
+
+.header__link {
     color: papayawhip;
+    text-decoration: none;
+}
+
+.header__link:hover {
+    color: rgb(255, 167, 24);
 }
 
 .header-tab {

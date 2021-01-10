@@ -1,1 +1,1 @@
-export { default } from './game-screen-mobx';
+export { GameScreenMobx as GameScreen } from './game-screen-mobx';

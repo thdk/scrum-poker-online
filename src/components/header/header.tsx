@@ -1,35 +1,21 @@
 import * as React from 'react';
-import classNames from 'classnames';
 
 import './header.css';
+import { Link } from 'react-router-dom';
 
-export type HeaderProps = {
-  editMode: boolean;
-  onTabClick: (tab: 'settings' | 'game') => void;
-};
-
-export const Header = (props: HeaderProps) => {
-  const { editMode, onTabClick } = props;
-
-  const createClassnames = (isSettingsTab: boolean) => classNames(
-    'header-tab',
-    { active: isSettingsTab === editMode },
-  );
-
-  return (
-    <div className="header">
-      <div
-        className={createClassnames(false)}
-        onClick={() => onTabClick('game')}
-      >
-        GAME
-      </div>
-      <div
-        className={createClassnames(true)}
-        onClick={() => onTabClick('settings')}
-      >
-        SETTINGS
-      </div>
-    </div>
-  );
-};
+export const Header = () => (
+  <div className="header">
+    <Link
+      to="/game"
+      className="header__link"
+    >
+      GAME
+    </Link>
+    <Link
+      to="/settings"
+      className="header__link"
+    >
+      SETTINGS
+    </Link>
+  </div>
+);

@@ -2,5 +2,5 @@ import { observable } from 'mobx';
 
 export class ViewStore {
   @observable
-  public isEditMode = false;
+  public sessionFromUrl: string | undefined = undefined;
 }

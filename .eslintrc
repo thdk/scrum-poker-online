@@ -1,6 +1,7 @@
 {
     "extends": [
-      "airbnb-typescript"
+      "airbnb-typescript",
+      "plugin:react-hooks/recommended"
     ],
     "rules": {
      "typedef": "off",

@@ -1,24 +1,33 @@
 import React from 'react';
 import './app.css';
-import { WelcomeScreen } from '../../screens/welcome';
-import GameScreen from '../../screens/game';
+import {
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
 import Header from '../header';
+import { GamePage } from '../../pages/game';
+import { SettingsPage } from '../../pages/settings';
+import { LoginPage } from '../../pages/login';
 
-export type AppProps = {
-  screen: 'game' | 'settings';
-};
-
-export const App = (props: AppProps) => {
-  const { screen } = props;
-
+export function App() {
   return (
-    <div>
+    <>
       <Header />
-      {
-        screen === 'game'
-          ? <GameScreen />
-          : <WelcomeScreen />
-      }
-    </div>
+      <Switch>
+        <Route exact path="/">
+          <Redirect to="/game" />
+        </Route>
+        <Route path="/login">
+          <LoginPage />
+        </Route>
+        <Route path="/game">
+          <GamePage />
+        </Route>
+        <Route path="/settings">
+          <SettingsPage />
+        </Route>
+      </Switch>
+    </>
   );
-};
+}
