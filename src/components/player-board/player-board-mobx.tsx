@@ -2,19 +2,21 @@ import * as React from 'react';
 import { observer } from 'mobx-react-lite';
 import { useCallback } from 'react';
 import {
-  getFieldPlayersSorted, getIsWaitingForPlayer, getPlayer, getSparePlayers,
+  getFieldPlayersSorted, getIsWaitingForPlayer, getPlayer,
 } from '../../modules/app/selectors';
 import { PlayerBoard } from './player-board';
-import { PlayerBench } from '../player-bench';
-import { ContentWrapper } from '../content-wrapper';
 import { useStore } from '../../modules/app/store/use-app-store';
 
-export const PlayerBoardMobx = observer(() => {
+export const PlayerBoardMobx = observer(({
+  readonly,
+}: {
+  readonly?: boolean;
+}) => {
   const store = useStore();
 
   const player = getPlayer(store);
   const players = getFieldPlayersSorted(store);
-  const sparePlayers = getSparePlayers(store);
+
   const isWaitingforPlayer = getIsWaitingForPlayer(store);
 
   const handleOnRestart = useCallback(() => {
@@ -28,27 +30,19 @@ export const PlayerBoardMobx = observer(() => {
     }, id);
   }, [store.playerStore]);
 
-  const handleOnSparePlayerClick = useCallback((id: string) => {
-    store.playerStore.updateDocument({
-      isSparePlayer: false,
-    }, id);
-  }, [store.playerStore]);
-
   return player?.session
     ? (
-      <ContentWrapper>
-        <PlayerBoard
-          players={players}
-          session={player.session}
-          onRestart={handleOnRestart}
-          isWaitingForPlayer={isWaitingforPlayer}
-          onPlayerClick={handleOnPlayerClick}
-        />
-        <PlayerBench
-          sparePlayers={sparePlayers}
-          onPlayerClick={handleOnSparePlayerClick}
-        />
-      </ContentWrapper>
+      <PlayerBoard
+        players={players}
+        session={player.session}
+        onRestart={readonly
+          ? undefined
+          : handleOnRestart}
+        isWaitingForPlayer={isWaitingforPlayer}
+        onPlayerClick={readonly
+          ? undefined
+          : handleOnPlayerClick}
+      />
     )
     : <></>;
 });

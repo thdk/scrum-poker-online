@@ -1,1 +1,1 @@
-export * from './player-bench';
+export { PlayerBenchMobx as PlayerBench } from './player-bench-mobx';
