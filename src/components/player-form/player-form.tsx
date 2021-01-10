@@ -8,8 +8,7 @@ import { IPlayer } from '../../modules/player/types';
 
 import { Content } from '../content';
 import { FormField } from '../form-field';
-import { savePlayer } from '../../modules/app/modifiers';
-import { useStore } from '../../modules/app/store/use-app-store';
+import { usePlayerStore } from '../../modules/player/use-player-store';
 
 export type PlayerFormProps = {
   player?: Partial<IPlayer>;
@@ -29,7 +28,7 @@ export const PlayerForm = (props: PlayerFormProps) => {
   const [playerName, setPlayerName] = useState(name);
   const [playerSession, setPlayerSession] = useState(session);
 
-  const store = useStore();
+  const playerStore = usePlayerStore();
 
   useEffect(() => {
     setPlayerSession(session);
@@ -46,10 +45,10 @@ export const PlayerForm = (props: PlayerFormProps) => {
   }, [setPlayerSession]);
 
   const handleIsSparePlayerChanged = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    savePlayer(store, {
+    playerStore.savePlayer({
       isSparePlayer: e.target.checked,
     });
-  }, [store]);
+  }, [playerStore]);
 
   const onShareLinkClick = useCallback(
     (sessionCode: string) => {

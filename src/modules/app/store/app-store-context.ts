@@ -1,4 +1,4 @@
-import firebase from 'firebase/app';
+import firebase from 'firebase';
 import React from 'react';
 import { AppStore } from '.';
 
@@ -22,11 +22,3 @@ const createStore = () => {
 export type Store = ReturnType<typeof createStore>;
 
 export const StoreContext = React.createContext(createStore());
-
-export const useStore = () => {
-  const store = React.useContext(StoreContext);
-  if (!store) {
-    throw new Error('useStore must be used within a StoreProvider.');
-  }
-  return store;
-};

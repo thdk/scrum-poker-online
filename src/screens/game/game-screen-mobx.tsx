@@ -2,18 +2,20 @@ import * as React from 'react';
 import { observer } from 'mobx-react-lite';
 import Cards from '../../components/cards';
 import { PlayerBoard } from '../../components/player-board';
-import { getPlayer } from '../../modules/app/selectors';
-import { useStore } from '../../modules/app/store/use-app-store';
 import { ContentWrapper } from '../../components/content-wrapper';
 import { PlayerBench } from '../../components/player-bench';
+import { usePlayerStore } from '../../modules/player/use-player-store';
 
 export const GameScreenMobx = observer(() => {
-  const store = useStore();
-  const player = getPlayer(store, true);
+  const playerStore = usePlayerStore();
+
+  if (!playerStore.player) {
+    return null;
+  }
 
   return (
     <ContentWrapper>
-      {(player.value !== undefined || player.isSparePlayer)
+      {(playerStore.player.value !== undefined || playerStore.player.isSparePlayer)
         ? (
           <>
             <PlayerBoard />

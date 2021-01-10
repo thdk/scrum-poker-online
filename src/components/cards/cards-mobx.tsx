@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Cards } from './cards';
-import { useStore } from '../../modules/app/store/use-app-store';
+import { useStore } from '../../modules/app/use-app-store';
 import { PlayCard } from '../../modules/cards/types';
 import { getCards } from '../../modules/cards';
 

@@ -1,23 +1,20 @@
 import { observer } from 'mobx-react-lite';
 import React, { useCallback } from 'react';
-import { getSparePlayers } from '../../modules/app/selectors';
-import { useStore } from '../../modules/app/store/use-app-store';
+import { usePlayerStore } from '../../modules/player/use-player-store';
 import { PlayerBench } from './player-bench';
 
 export const PlayerBenchMobx = observer(() => {
-  const store = useStore();
-
-  const sparePlayers = getSparePlayers(store);
+  const playerStore = usePlayerStore();
 
   const handleOnSparePlayerClick = useCallback((id: string) => {
-    store.playerStore.updateDocument({
+    playerStore.updateDocument({
       isSparePlayer: false,
     }, id);
-  }, [store.playerStore]);
+  }, [playerStore]);
 
   return (
     <PlayerBench
-      sparePlayers={sparePlayers}
+      sparePlayers={playerStore.sparePlayers}
       onPlayerClick={handleOnSparePlayerClick}
     />
   );

@@ -1,7 +1,7 @@
 import { useStore } from '../app/use-app-store';
 
-export const useAuthStore = () => {
+export const usePlayerStore = () => {
   const store = useStore();
 
-  return store.authStore;
+  return store.playerStore;
 };

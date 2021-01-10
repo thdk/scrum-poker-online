@@ -16,28 +16,28 @@ export class AppStore {
   public authStore: AuthStore<IPlayer>;
 
   constructor({
-	  firestore,
-	  auth,
+    firestore,
+    auth,
   }: {
     firestore: firebase.firestore.Firestore;
     auth: firebase.auth.Auth;
   }) {
-	  this.authStore = new AuthStore({
-	    firestore,
-	    auth,
-	  }, {
-	    collection: 'players',
-	    collectionOptions: {
-	      realtimeMode: RealtimeMode.on,
-	      deserialize: deserializePlayer,
-	      serialize: serializePlayer,
-	    },
-	  });
+    this.authStore = new AuthStore({
+      firestore,
+      auth,
+    }, {
+      collection: 'players',
+      collectionOptions: {
+        realtimeMode: RealtimeMode.on,
+        deserialize: deserializePlayer,
+        serialize: serializePlayer,
+      },
+    });
 
-	  this.playerStore = new PlayerStore(
-	    this,
-	    firestore,
-	  );
-	  this.viewStore = new ViewStore();
+    this.playerStore = new PlayerStore(
+      this,
+      firestore,
+    );
+    this.viewStore = new ViewStore();
   }
 }
