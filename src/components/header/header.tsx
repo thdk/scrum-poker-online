@@ -9,7 +9,13 @@ export const Header = () => (
       to="/game"
       className="header__link"
     >
-      GAME
+      PLAY
+    </Link>
+    <Link
+      to="/tv"
+      className="header__link"
+    >
+      TV
     </Link>
     <Link
       to="/settings"

@@ -5,7 +5,7 @@ import type { AppStore } from '../../app/store';
 import { sortCards } from '../../cards';
 import { deserializePlayer } from '../serialization/deserializer';
 import { serializePlayer } from '../serialization/serializer';
-import { IPlayer, IPlayerData, PlayerType } from '../types';
+import { IPlayer, IPlayerData } from '../types';
 
 export class PlayerStore extends CrudStore<IPlayer, IPlayerData> {
   private readonly appStore: AppStore;
@@ -42,14 +42,12 @@ export class PlayerStore extends CrudStore<IPlayer, IPlayerData> {
   @computed
   public get fieldPlayers() {
 	  return this.collection.docs
-	    .filter((d) => d.data?.type === PlayerType.player
-				&& !d.data?.isSparePlayer);
+	    .filter((d) => !d.data?.isSparePlayer);
   }
 
   public get sparePlayers() {
 	  return this.collection.docs
-	    .filter((d) => d.data?.type === PlayerType.player
-				&& d.data?.isSparePlayer)
+	    .filter((d) => d.data?.isSparePlayer)
 	    .map((doc) => doc.data!);
   }
 

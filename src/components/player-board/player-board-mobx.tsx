@@ -7,10 +7,9 @@ import {
 import { PlayerBoard } from './player-board';
 import { PlayerBench } from '../player-bench';
 import { ContentWrapper } from '../content-wrapper';
-import { PlayerType } from '../../modules/player/types';
 import { useStore } from '../../modules/app/store/use-app-store';
 
-const PlayerBoardMobx = () => {
+export const PlayerBoardMobx = observer(() => {
   const store = useStore();
 
   const player = getPlayer(store);
@@ -23,12 +22,6 @@ const PlayerBoardMobx = () => {
   }, [store.playerStore]);
 
   const handleOnPlayerClick = useCallback((id: string) => {
-    if (
-      store.playerStore.player?.type !== PlayerType.host
-    ) {
-      return;
-    }
-
     store.playerStore.updateDocument({
       isSparePlayer: true,
       value: undefined,
@@ -36,10 +29,6 @@ const PlayerBoardMobx = () => {
   }, [store.playerStore]);
 
   const handleOnSparePlayerClick = useCallback((id: string) => {
-    if (store.playerStore.player?.type !== PlayerType.host) {
-      return;
-    }
-
     store.playerStore.updateDocument({
       isSparePlayer: false,
     }, id);
@@ -57,15 +46,9 @@ const PlayerBoardMobx = () => {
         />
         <PlayerBench
           sparePlayers={sparePlayers}
-          onPlayerClick={
-            store.playerStore.player?.type === PlayerType.host
-              ? handleOnSparePlayerClick
-              : undefined
-          }
+          onPlayerClick={handleOnSparePlayerClick}
         />
       </ContentWrapper>
     )
     : <></>;
-};
-
-export default observer(PlayerBoardMobx);
+});

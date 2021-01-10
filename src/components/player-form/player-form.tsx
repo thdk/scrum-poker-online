@@ -4,7 +4,7 @@ import {
 } from 'react';
 import copy from 'copy-to-clipboard';
 import firebase from 'firebase/app';
-import { IPlayer, PlayerType } from '../../modules/player/types';
+import { IPlayer } from '../../modules/player/types';
 
 import { Content } from '../content';
 import { FormField } from '../form-field';
@@ -15,11 +15,10 @@ export type PlayerFormProps = {
 };
 
 export const PlayerForm = (props: PlayerFormProps) => {
-  const { onSave, player: { name = '', session = '', type = PlayerType.player } = {} } = props;
+  const { onSave, player: { name = '', session = '' } = {} } = props;
 
   const [playerName, setPlayerName] = useState(name);
   const [playerSession, setPlayerSession] = useState(session);
-  const [playertype, setPlayerType] = useState(type);
 
   useEffect(() => {
     setPlayerSession(session);
@@ -35,10 +34,6 @@ export const PlayerForm = (props: PlayerFormProps) => {
     setPlayerSession(e.target.value);
   }, [setPlayerSession]);
 
-  const handleChangePlayertype = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setPlayerType(e.target.checked ? PlayerType.host : PlayerType.player);
-  }, []);
-
   const onShareLinkClick = useCallback(
     (sessionCode: string) => {
       copy(`${window.location.origin}/settings?session=${encodeURI(sessionCode.trim())}`, {});
@@ -47,12 +42,17 @@ export const PlayerForm = (props: PlayerFormProps) => {
   );
 
   const handleSave = useCallback(() => {
-    if (playertype === PlayerType.player && !playerName) {
+    if (!playerName) {
       return;
     }
 
-    onSave({ name: playerName, type: playertype, session: playerSession.trim() });
-  }, [onSave, playerName, playerSession, playertype]);
+    onSave({ name: playerName, session: playerSession.trim() });
+  },
+  [
+    onSave,
+    playerName,
+    playerSession,
+  ]);
 
   const handleLogout = useCallback(() => {
     firebase.auth().signOut();
@@ -74,15 +74,9 @@ export const PlayerForm = (props: PlayerFormProps) => {
   return (
     <div className="player-form">
       <Content className="player-form-fields">
-        <FormField type="checkbox" label="Tv mode" checked={playertype === PlayerType.host} onChange={handleChangePlayertype} />
-
         <FormField type="text" label="Session code" value={playerSession} onChange={handleChangeSession} />
 
-        {
-          playertype === PlayerType.player
-            ? <FormField type="text" label="Player name" value={playerName} onChange={handleChangeName} />
-            : null
-        }
+        <FormField type="text" label="Player name" value={playerName} onChange={handleChangeName} />
 
         <ShareLink sessionCode={playerSession} />
 
