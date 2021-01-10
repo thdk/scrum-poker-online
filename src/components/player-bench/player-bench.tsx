@@ -1,7 +1,6 @@
 import React from 'react';
 import { IPlayer } from '../../modules/player/types';
 import { Content } from '../content';
-import { ContentWrapper } from '../content-wrapper';
 
 import './player-bench.css';
 
@@ -13,15 +12,14 @@ export function PlayerBench({
   onPlayerClick?: (playerId: string) => void,
 }) {
   return (
-    <ContentWrapper>
-      <Content
-        className="player-bench"
-        style={{
-          alignItems: 'center',
-        }}
-      >
-        <h3>Player bench</h3>
-        {
+    <Content
+      className="player-bench"
+      style={{
+        alignItems: 'center',
+      }}
+    >
+      <h3>Player bench</h3>
+      {
                 onPlayerClick
                   ? (
                     <div className="player-bench-info">
@@ -38,13 +36,13 @@ export function PlayerBench({
                   : null
 
             }
-        <div
-          className="player-bench-players"
-          style={{
-            textAlign: 'center',
-          }}
-        >
-          {
+      <div
+        className="player-bench-players"
+        style={{
+          textAlign: 'center',
+        }}
+      >
+        {
                     sparePlayers.length === 0
                       ? (
                         <p
@@ -57,7 +55,7 @@ export function PlayerBench({
                       )
                       : null
                 }
-          {
+        {
                     sparePlayers.map((p) => (
                       <div
                         key={p.name}
@@ -69,8 +67,7 @@ export function PlayerBench({
                       </div>
                     ))
                 }
-        </div>
-      </Content>
-    </ContentWrapper>
+      </div>
+    </Content>
   );
 }

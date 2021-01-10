@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useCallback } from 'react';
 import { Doc } from 'firestorable';
 import classNames from 'classnames';
 
@@ -8,30 +7,24 @@ import { Content } from '../content';
 
 import './player-board.css';
 
-export type PlayerBoardProps = {
+export function PlayerBoard({
+  isWaitingForPlayer,
+  players,
+  session,
+  onRestart,
+  onPlayerClick,
+}: {
   players: Doc<IPlayer>[];
   session: string;
   isWaitingForPlayer: boolean;
 
-  onRestart: () => void;
+  onRestart?: () => void;
   onPlayerClick?: (playerId: string) => void;
-};
-
-export const PlayerBoard = (props: PlayerBoardProps) => {
-  const {
-    isWaitingForPlayer,
-    players,
-    session,
-    onRestart,
-    onPlayerClick,
-  } = props;
-
-  const handleRestartClick = useCallback(onRestart, [onRestart]);
-
+}) {
   return (
     <Content className="player-board">
       <h2>
-        Session:
+        <span>Session: </span>
         {session}
       </h2>
       <div className="player-board-ranking">
@@ -63,12 +56,16 @@ export const PlayerBoard = (props: PlayerBoardProps) => {
           })
         }
       </div>
-      <input
-        style={{ marginTop: '4em' }}
-        type="button"
-        value="Restart"
-        onClick={handleRestartClick}
-      />
+      {onRestart
+        ? (
+          <input
+            style={{ marginTop: '4em' }}
+            type="button"
+            value="Restart"
+            onClick={onRestart}
+          />
+        )
+        : null}
     </Content>
   );
-};
+}
