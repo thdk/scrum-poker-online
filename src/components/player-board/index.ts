@@ -1,1 +1,1 @@
-export { default } from "./player-board-mobx";
+export { default } from './player-board-mobx';

@@ -1,25 +1,24 @@
-import { PlayCard } from "../../app/store";
+import { PlayCard } from '../../cards';
 
 export enum PlayerType {
-	player = 0,
-	host = 1,
+  player = 0,
+  host = 1,
 }
 
 export interface IPlayer {
-	name?: string;
-	session?: string;
-	type: PlayerType;
-	value?: PlayCard | null;
-	uid: string;
-	isSparePlayer?: boolean;
+  name?: string;
+  session?: string;
+  type: PlayerType;
+  value?: PlayCard | null;
+  uid: string;
+  isSparePlayer?: boolean;
 }
 
-
 export interface IPlayerData {
-	name: string;
-	session: string | null;
-	type: PlayerType;
-	value?: PlayCard | null;
-	uid: string;
-	isSparePlayer?: boolean;
+  name: string;
+  session: string | null;
+  type: PlayerType;
+  value?: PlayCard | null;
+  uid: string;
+  isSparePlayer?: boolean;
 }

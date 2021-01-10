@@ -1,21 +1,21 @@
-import { PlayerStore } from "../store";
+import { PlayerStore } from '../store';
 
 export function selectPlayer(store: PlayerStore) {
-	return store.player;
+  return store.player;
 }
 
 export function selectFieldPlayers(store: PlayerStore) {
-	return store.fieldPlayers;
+  return store.fieldPlayers;
 }
 
 export function selectSparePlayers(store: PlayerStore) {
-	return store.sparePlayers;
+  return store.sparePlayers;
 }
 
 export function selectFieldPlayersSorted(store: PlayerStore) {
-	return store.fieldPlayersSorted;
+  return store.fieldPlayersSorted;
 }
 
 export function selectIsWaitingForPlayer(store: PlayerStore) {
-	return store.isWaitingForPlayer;
+  return store.isWaitingForPlayer;
 }

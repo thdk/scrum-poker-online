@@ -1,1 +1,1 @@
-export * from "./player-selectors";
+export * from './player-selectors';

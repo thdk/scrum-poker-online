@@ -1,1 +1,1 @@
-export { default } from "./cards-mobx";
+export { default } from './cards-mobx';

@@ -1,0 +1,24 @@
+{
+    "extends": [
+      "airbnb-typescript"
+    ],
+    "rules": {
+     "typedef": "off",
+     "linebreak-style":"off",
+     "import/prefer-default-export": "off",
+     "react/require-default-props": "off",
+     "react/jsx-props-no-spreading": "off",
+     "jsx-a11y/anchor-is-valid": "off",
+     "jsx-a11y/click-events-have-key-events": "off",
+     "jsx-a11y/no-static-element-interactions": "off",
+     "no-param-reassign": "off",
+
+     // to fix
+     "no-tabs": "off",
+     "no-mixed-spaces-and-tabs": "off",
+     "import/extensions": "off"
+    },
+    "parserOptions": {
+      "project": "./tsconfig.json"
+    }
+}

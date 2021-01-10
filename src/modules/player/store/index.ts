@@ -1,1 +1,1 @@
-export * from "./player-store";
+export * from './player-store';

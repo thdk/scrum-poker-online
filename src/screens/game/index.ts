@@ -1,1 +1,1 @@
-export { default } from "./game-screen-mobx";
+export { default } from './game-screen-mobx';

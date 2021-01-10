@@ -1,6 +1,6 @@
-import { observable } from "mobx";
+import { observable } from 'mobx';
 
 export class ViewStore {
-    @observable
-    public isEditMode = false;
+  @observable
+  public isEditMode = false;
 }

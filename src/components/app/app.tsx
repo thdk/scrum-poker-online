@@ -5,7 +5,7 @@ import GameScreen from '../../screens/game';
 import Header from '../header';
 
 export type AppProps = {
-  screen: "game" | "settings";  
+  screen: 'game' | 'settings';
 };
 
 export const App = (props: AppProps) => {
@@ -15,8 +15,8 @@ export const App = (props: AppProps) => {
     <div>
       <Header />
       {
-        screen === "game" ?
-          <GameScreen />
+        screen === 'game'
+          ? <GameScreen />
           : <WelcomeScreen />
       }
     </div>

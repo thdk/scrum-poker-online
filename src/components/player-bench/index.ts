@@ -1,1 +1,1 @@
-export * from "./player-bench";
+export * from './player-bench';

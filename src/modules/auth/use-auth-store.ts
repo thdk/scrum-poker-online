@@ -1,7 +1,7 @@
-import { useStore } from "../../hooks"
+import { useStore } from '../app/store/use-app-store';
 
 export const useAuthStore = () => {
-    const store = useStore();
+  const store = useStore();
 
-    return store.authStore;
+  return store.authStore;
 };

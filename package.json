@@ -79,15 +79,9 @@
     "test": "node scripts/test.js",
     "deploy": "firebase deploy --only hosting,firestore",
     "emulators": "firebase emulators:start --only firestore,hosting",
-    "serve": "firebase emulators:start --only hosting"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app"
-    ],
-    "rules": {
-      "typedef": "off"
-    }
+    "serve": "firebase emulators:start --only hosting",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "npm run lint -- --fix"
   },
   "browserslist": {
     "production": [
@@ -104,7 +98,10 @@
   "devDependencies": {
     "@firebase/rules-unit-testing": "^1.0.7",
     "@types/classnames": "^2.2.10",
+    "eslint-config-airbnb-typescript": "^12.0.0",
     "firebase-admin": "^9.2.0",
+    "husky": "^4.3.7",
+    "lint-staged": "^10.5.3",
     "npm-run-all": "^4.1.5",
     "react-scripts": "^3.4.3"
   },
@@ -161,6 +158,16 @@
   "babel": {
     "presets": [
       "react-app"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.(ts|tsx)": [
+      "npm run --silent lint:fix"
     ]
   }
 }
