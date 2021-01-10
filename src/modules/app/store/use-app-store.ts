@@ -13,6 +13,9 @@ const createStore = () => {
     (window as any).store = store;
   }
 
+  const urlParams = new URLSearchParams(window.location.search);
+  store.viewStore.sessionFromUrl = urlParams.get('session') || undefined;
+
   return store;
 };
 

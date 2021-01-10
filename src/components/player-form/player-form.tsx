@@ -1,5 +1,7 @@
 import * as React from 'react';
-import { useCallback, useState, useMemo } from 'react';
+import {
+  useCallback, useState, useMemo, useEffect,
+} from 'react';
 import copy from 'copy-to-clipboard';
 import firebase from 'firebase/app';
 import { IPlayer, PlayerType } from '../../modules/player/types';
@@ -19,6 +21,12 @@ export const PlayerForm = (props: PlayerFormProps) => {
   const [playerSession, setPlayerSession] = useState(session);
   const [playertype, setPlayerType] = useState(type);
 
+  useEffect(() => {
+    setPlayerSession(session);
+  }, [
+    session,
+  ]);
+
   const handleChangeName = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setPlayerName(e.target.value);
   }, [setPlayerName]);
@@ -33,7 +41,7 @@ export const PlayerForm = (props: PlayerFormProps) => {
 
   const onShareLinkClick = useCallback(
     (sessionCode: string) => {
-      copy(`${window.location.origin}?session=${encodeURI(sessionCode.trim())}`, {});
+      copy(`${window.location.origin}/settings?session=${encodeURI(sessionCode.trim())}`, {});
     },
     [],
   );

@@ -6,7 +6,7 @@ import { getPlayer } from '../../modules/app/selectors';
 import { PlayerType } from '../../modules/player/types';
 import { useStore } from '../../modules/app/store/use-app-store';
 
-const GameScreenMobx = () => {
+export const GameScreenMobx = observer(() => {
   const store = useStore();
   const player = getPlayer(store, true);
 
@@ -19,6 +19,4 @@ const GameScreenMobx = () => {
     return <PlayerBoard />;
   }
   return <Cards />;
-};
-
-export default observer(GameScreenMobx);
+});

@@ -28,7 +28,7 @@ export class PlayerStore extends CrudStore<IPlayer, IPlayerData> {
 	  this.appStore = appStore;
 
 	  reaction(() => this.player, (player) => {
-	    this.collection.query = player.session !== undefined
+	    this.collection.query = player?.session !== undefined
 	      ? (ref) => ref.where('session', '==', player.session)
 	      : null;
 	  });
@@ -61,7 +61,7 @@ export class PlayerStore extends CrudStore<IPlayer, IPlayerData> {
 
   @computed
   public get player() {
-	  return this.appStore.authStore.activeDocument as IPlayer;
+	  return this.appStore.authStore.activeDocument as IPlayer | undefined;
   }
 
   @computed
