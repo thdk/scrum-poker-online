@@ -9,6 +9,7 @@ import Header from '../header';
 import { GamePage } from '../../pages/game';
 import { SettingsPage } from '../../pages/settings';
 import { LoginPage } from '../../pages/login';
+import { TvPage } from '../../pages/tv';
 
 export function App() {
   return (
@@ -26,6 +27,9 @@ export function App() {
         </Route>
         <Route path="/settings">
           <SettingsPage />
+        </Route>
+        <Route path="/tv">
+          <TvPage />
         </Route>
       </Switch>
     </>
