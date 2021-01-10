@@ -8,6 +8,8 @@ import { IPlayer } from '../../modules/player/types';
 
 import { Content } from '../content';
 import { FormField } from '../form-field';
+import { savePlayer } from '../../modules/app/modifiers';
+import { useStore } from '../../modules/app/store/use-app-store';
 
 export type PlayerFormProps = {
   player?: Partial<IPlayer>;
@@ -15,10 +17,19 @@ export type PlayerFormProps = {
 };
 
 export const PlayerForm = (props: PlayerFormProps) => {
-  const { onSave, player: { name = '', session = '' } = {} } = props;
+  const {
+    onSave,
+    player: {
+      name = '',
+      session = '',
+      isSparePlayer = false,
+    } = {},
+  } = props;
 
   const [playerName, setPlayerName] = useState(name);
   const [playerSession, setPlayerSession] = useState(session);
+
+  const store = useStore();
 
   useEffect(() => {
     setPlayerSession(session);
@@ -33,6 +44,12 @@ export const PlayerForm = (props: PlayerFormProps) => {
   const handleChangeSession = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setPlayerSession(e.target.value);
   }, [setPlayerSession]);
+
+  const handleIsSparePlayerChanged = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    savePlayer(store, {
+      isSparePlayer: e.target.checked,
+    });
+  }, [store]);
 
   const onShareLinkClick = useCallback(
     (sessionCode: string) => {
@@ -74,9 +91,26 @@ export const PlayerForm = (props: PlayerFormProps) => {
   return (
     <div className="player-form">
       <Content className="player-form-fields">
-        <FormField type="text" label="Session code" value={playerSession} onChange={handleChangeSession} />
+        <FormField
+          type="text"
+          label="Session code"
+          value={playerSession}
+          onChange={handleChangeSession}
+        />
 
-        <FormField type="text" label="Player name" value={playerName} onChange={handleChangeName} />
+        <FormField
+          type="text"
+          label="Player name"
+          value={playerName}
+          onChange={handleChangeName}
+        />
+
+        <FormField
+          type="checkbox"
+          label="Spare player"
+          checked={isSparePlayer}
+          onChange={handleIsSparePlayerChanged}
+        />
 
         <ShareLink sessionCode={playerSession} />
 
