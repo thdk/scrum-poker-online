@@ -82,7 +82,8 @@
     "emulators": "firebase emulators:start --only firestore,hosting",
     "serve": "firebase emulators:start --only hosting",
     "lint": "eslint src --ext .ts,.tsx",
-    "lint:fix": "npm run lint -- --fix"
+    "lint:fix": "npm run lint -- --fix",
+    "version": "auto-changelog && git add CHANGELOG.md"
   },
   "browserslist": {
     "production": [
@@ -99,6 +100,7 @@
   "devDependencies": {
     "@firebase/rules-unit-testing": "^1.0.7",
     "@types/classnames": "^2.2.10",
+    "auto-changelog": "^2.2.1",
     "eslint-config-airbnb-typescript": "^12.0.0",
     "firebase-admin": "^9.2.0",
     "husky": "^4.3.7",
