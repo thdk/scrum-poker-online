@@ -36,15 +36,15 @@ export const PlayerBoardMobx = observer(({
   return session
     ? (
       <>
+        <h2
+          className="player-boards__title"
+        >
+          <span>Session: </span>
+          {session}
+        </h2>
         <div
           className="player-boards"
         >
-          <h2
-            className="player-boards__title"
-          >
-            <span>Session: </span>
-            {session}
-          </h2>
           {
             playerStore.fieldPlayersSorted.map((players, i) => (
               <PlayerBoard
