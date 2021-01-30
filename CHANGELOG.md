@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.4.0](https://github.com/thdk/scrum-poker-online/compare/v0.3.0...v0.4.0)
+
+### Fixed
+
+- feat: allow to create a second group of players within a single session [`#9`](https://github.com/thdk/scrum-poker-online/issues/9)
+- feat: allow player to redraw as long as other cards haven't been revealed [`#8`](https://github.com/thdk/scrum-poker-online/issues/8)
+
+### Commits
+
+- chore: use latest version of firebase and firestorable [`5828b8d`](https://github.com/thdk/scrum-poker-online/commit/5828b8dd388dd80e814610eeb4d786f831c778f4)
+- refactor: use usePlayerStore instead of selector pattern [`2d60888`](https://github.com/thdk/scrum-poker-online/commit/2d60888bdb5129917cbdeda86c9495910356802f)
+- build: use auto-changelog to generate changelog.md [`a1935dd`](https://github.com/thdk/scrum-poker-online/commit/a1935dd298f5043e280d3905d8207db7351eff22)
+
 ## [v0.3.0](https://github.com/thdk/scrum-poker-online/compare/v0.2.2...v0.3.0) - 2021-01-10
 
 ### Merged
