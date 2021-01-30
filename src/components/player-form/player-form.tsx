@@ -22,11 +22,13 @@ export const PlayerForm = (props: PlayerFormProps) => {
       name = '',
       session = '',
       isSparePlayer = false,
+      field = 1,
     } = {},
   } = props;
 
   const [playerName, setPlayerName] = useState(name);
   const [playerSession, setPlayerSession] = useState(session);
+  const [playerField, setPlayerField] = useState(field);
 
   const playerStore = usePlayerStore();
 
@@ -50,6 +52,10 @@ export const PlayerForm = (props: PlayerFormProps) => {
     });
   }, [playerStore]);
 
+  const handlePlayerFieldChanged = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+    setPlayerField(+e.target.value);
+  }, []);
+
   const onShareLinkClick = useCallback(
     (sessionCode: string) => {
       copy(`${window.location.origin}/settings?session=${encodeURI(sessionCode.trim())}`, {});
@@ -62,10 +68,11 @@ export const PlayerForm = (props: PlayerFormProps) => {
       return;
     }
 
-    onSave({ name: playerName, session: playerSession.trim() });
+    onSave({ name: playerName, session: playerSession.trim(), field: playerField });
   },
   [
     onSave,
+    playerField,
     playerName,
     playerSession,
   ]);
@@ -102,6 +109,25 @@ export const PlayerForm = (props: PlayerFormProps) => {
           label="Player name"
           value={playerName}
           onChange={handleChangeName}
+        />
+
+        <FormField
+          label="Field"
+          component={(
+            <select
+              value={playerField}
+              onChange={handlePlayerFieldChanged}
+            >
+              <option
+                label="field 1"
+                value={1}
+              />
+              <option
+                label="field 2"
+                value={2}
+              />
+            </select>
+          )}
         />
 
         <FormField

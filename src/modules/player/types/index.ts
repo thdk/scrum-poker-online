@@ -6,6 +6,7 @@ export interface IPlayer {
   value?: PlayCard | null;
   uid: string;
   isSparePlayer?: boolean;
+  field: number;
 }
 
 export interface IPlayerData {
@@ -14,4 +15,5 @@ export interface IPlayerData {
   value?: PlayCard | null;
   uid: string;
   isSparePlayer?: boolean;
+  field?: number;
 }

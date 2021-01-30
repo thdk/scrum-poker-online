@@ -1,4 +1,4 @@
-import { CrudStore, RealtimeMode } from 'firestorable';
+import { CrudStore, Doc, RealtimeMode } from 'firestorable';
 import { computed, reaction } from 'mobx';
 import type firebase from 'firebase';
 
@@ -12,80 +12,85 @@ export class PlayerStore extends CrudStore<IPlayer, IPlayerData> {
   private readonly appStore: AppStore;
 
   constructor(
-	  appStore: AppStore,
-	  firestore: firebase.firestore.Firestore,
+    appStore: AppStore,
+    firestore: firebase.firestore.Firestore,
   ) {
-	  super({
-	    collection: 'players',
-	    collectionOptions: {
-	      deserialize: deserializePlayer,
-	      serialize: serializePlayer,
-	      realtimeMode: RealtimeMode.on,
-	    },
-	  }, {
-	    firestore,
-	  });
+    super({
+      collection: 'players',
+      collectionOptions: {
+        deserialize: deserializePlayer,
+        serialize: serializePlayer,
+        realtimeMode: RealtimeMode.on,
+      },
+    }, {
+      firestore,
+    });
 
-	  this.appStore = appStore;
+    this.appStore = appStore;
 
-	  reaction(() => this.player, (player) => {
-	    this.collection.query = player?.session !== undefined
-	      ? (ref) => ref.where('session', '==', player.session)
-	      : null;
-	  });
+    reaction(() => this.player, (player) => {
+      this.collection.query = player?.session !== undefined
+        ? (ref) => ref.where('session', '==', player.session)
+        : null;
+    });
   }
 
   @computed
   private get playerId() {
-	  return this.appStore.authStore.activeDocumentId;
+    return this.appStore.authStore.activeDocumentId;
   }
 
   @computed
   public get fieldPlayers() {
-	  return this.collection.docs
-	    .filter((d) => !d.data?.isSparePlayer);
+    return this.collection.docs.reduce((p, c) => {
+      if (c.data && !c.data?.isSparePlayer) {
+        p[(c.data.field || 1) - 1].push(c);
+      }
+      return p;
+    }, [[], []] as [Doc<IPlayer>[], Doc<IPlayer>[]]);
   }
 
   public get sparePlayers() {
-	  return this.collection.docs
-	    .filter((d) => d.data?.isSparePlayer)
-	    .map((doc) => doc.data!);
+    return this.collection.docs
+      .filter((d) => d.data?.isSparePlayer)
+      .map((doc) => doc.data!);
   }
 
   @computed get fieldPlayersSorted() {
-	  if (this.isWaitingForPlayer) return this.fieldPlayers;
+    if (this.isWaitingForPlayer) return this.fieldPlayers;
 
-	  return this.fieldPlayers.sort((a, b) => sortCards(a.data!.value!, b.data!.value!));
+    return this.fieldPlayers
+      .map((players) => players.sort((a, b) => sortCards(a.data!.value!, b.data!.value!)));
   }
 
   @computed
   public get player() {
-	  return this.appStore.authStore.activeDocument as IPlayer | undefined;
+    return this.appStore.authStore.activeDocument as IPlayer | undefined;
   }
 
   @computed
   public get isWaitingForPlayer() {
-	  return this.fieldPlayers
-	    .filter((player) => !player.data!.isSparePlayer)
-	    .some((p) => p.data!.value === undefined);
+    return this.collection.docs
+      .filter((player) => !player.data!.isSparePlayer)
+      .some((p) => p.data!.value === undefined);
   }
 
   public savePlayer(data: Partial<IPlayer>) {
-	  this.updatePlayerAsync(data);
+    this.updatePlayerAsync(data);
   }
 
   public updatePlayerAsync(player: Partial<IPlayer>) {
-	  return (this.player && this.playerId)
-	    ? this.appStore.authStore.updateDocument(player, this.playerId)
-	    : Promise.reject(new Error('No player set'));
+    return (this.player && this.playerId)
+      ? this.appStore.authStore.updateDocument(player, this.playerId)
+      : Promise.reject(new Error('No player set'));
   }
 
   public restart() {
-	  this.appStore.authStore.collection.updateAsync(
-	    {
-	      value: undefined,
-	    },
-	    ...this.fieldPlayers.map((p) => p.id),
-	  );
+    this.appStore.authStore.collection.updateAsync(
+      {
+        value: undefined,
+      },
+      ...this.collection.docs.map((p) => p.id),
+    );
   }
 }

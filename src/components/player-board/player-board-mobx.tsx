@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { useCallback } from 'react';
 import { PlayerBoard } from './player-board';
 import { usePlayerStore } from '../../modules/player/use-player-store';
+import { PlayerBoardActions } from '../player-board-actions';
 
 export const PlayerBoardMobx = observer(({
   readonly,
@@ -31,24 +32,45 @@ export const PlayerBoardMobx = observer(({
     }, id);
   }, [playerStore]);
 
-  return playerStore.player?.session
+  const session = playerStore.player?.session;
+  return session
     ? (
-      <PlayerBoard
-        players={playerStore.fieldPlayersSorted}
-        session={playerStore.player.session}
-        onRestart={readonly
-          ? undefined
-          : handleOnRestart}
-        onRedraw={
-          (readonly || playerStore.player?.isSparePlayer)
+      <>
+        <div
+          className="player-boards"
+        >
+          <h2
+            className="player-boards__title"
+          >
+            <span>Session: </span>
+            {session}
+          </h2>
+          {
+            playerStore.fieldPlayersSorted.map((players, i) => (
+              <PlayerBoard
+                // eslint-disable-next-line react/no-array-index-key
+                key={i}
+                players={players}
+                isWaitingForPlayer={playerStore.isWaitingForPlayer}
+                onPlayerClick={readonly
+                  ? undefined
+                  : handleOnPlayerClick}
+              />
+            ))
+          }
+        </div>
+        <PlayerBoardActions
+          canRedraw={playerStore.isWaitingForPlayer}
+          onRestart={readonly
             ? undefined
-            : handleOnRedraw
-        }
-        isWaitingForPlayer={playerStore.isWaitingForPlayer}
-        onPlayerClick={readonly
-          ? undefined
-          : handleOnPlayerClick}
-      />
+            : handleOnRestart}
+          onRedraw={
+            (readonly || playerStore.player?.isSparePlayer)
+              ? undefined
+              : handleOnRedraw
+          }
+        />
+      </>
     )
-    : <></>;
+    : null;
 });

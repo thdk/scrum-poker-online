@@ -1,0 +1,9 @@
+.player-board-actions {
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+}
+
+.player-board-actions input{
+    margin: 1em;
+}

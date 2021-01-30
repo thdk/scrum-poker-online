@@ -2,13 +2,24 @@ import * as React from 'react';
 import classNames from 'classnames';
 
 import './form-field.css';
+import { PropsWithChildren, ReactNode } from 'react';
 
 export type FormFieldProps = React.HTMLProps<HTMLInputElement> & {
   label?: string;
 };
 
-export const FormField = (props: FormFieldProps) => {
-  const { label, type, ...inputProps } = props;
+export const FormField = (
+  props: FormFieldProps | PropsWithChildren<{ component: ReactNode; label: string; type: string }>,
+) => {
+  const {
+    component,
+    label,
+    type,
+    ...inputProps
+  } = {
+    component: undefined,
+    ...props,
+  };
 
   const styles = classNames('form-field', `form-field-${type}`);
   return (
@@ -21,7 +32,7 @@ export const FormField = (props: FormFieldProps) => {
         )
         : null}
       <div className="form-field-input">
-        <input {...inputProps} type={type} />
+        {component || <input {...inputProps} type={type} />}
       </div>
     </div>
   );
