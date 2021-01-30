@@ -12,6 +12,7 @@ export function PlayerBoard({
   players,
   session,
   onRestart,
+  onRedraw,
   onPlayerClick,
 }: {
   players: Doc<IPlayer>[];
@@ -19,6 +20,7 @@ export function PlayerBoard({
   isWaitingForPlayer: boolean;
 
   onRestart?: () => void;
+  onRedraw?: () => void;
   onPlayerClick?: (playerId: string) => void;
 }) {
   return (
@@ -56,16 +58,31 @@ export function PlayerBoard({
           })
         }
       </div>
-      {onRestart
-        ? (
-          <input
-            style={{ marginTop: '4em' }}
-            type="button"
-            value="Restart"
-            onClick={onRestart}
-          />
-        )
-        : null}
+      <div
+        className="player-board__actions"
+      >
+        {onRedraw
+          ? (
+            <input
+              style={{ marginTop: '4em' }}
+              type="button"
+              value="Redraw"
+              onClick={onRedraw}
+              disabled={!isWaitingForPlayer}
+            />
+          )
+          : null}
+        {onRestart
+          ? (
+            <input
+              style={{ marginTop: '4em' }}
+              type="button"
+              value="Restart"
+              onClick={onRestart}
+            />
+          )
+          : null}
+      </div>
     </Content>
   );
 }

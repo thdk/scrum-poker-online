@@ -10,3 +10,11 @@
 .player-board-rank--value {
 	color: #408a12;
 }
+
+.player-board__actions {
+	display: flex;
+}
+
+.player-board__actions input{
+	margin: 1em;
+}

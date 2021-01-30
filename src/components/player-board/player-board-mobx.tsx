@@ -15,6 +15,15 @@ export const PlayerBoardMobx = observer(({
     playerStore.restart();
   }, [playerStore]);
 
+  const handleOnRedraw = useCallback(
+    () => {
+      playerStore.updatePlayerAsync({ value: undefined });
+    },
+    [
+      playerStore,
+    ],
+  );
+
   const handleOnPlayerClick = useCallback((id: string) => {
     playerStore.updateDocument({
       isSparePlayer: true,
@@ -30,6 +39,11 @@ export const PlayerBoardMobx = observer(({
         onRestart={readonly
           ? undefined
           : handleOnRestart}
+        onRedraw={
+          (readonly || playerStore.player?.isSparePlayer)
+            ? undefined
+            : handleOnRedraw
+        }
         isWaitingForPlayer={playerStore.isWaitingForPlayer}
         onPlayerClick={readonly
           ? undefined
