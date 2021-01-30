@@ -1,5 +1,6 @@
 import { CrudStore, RealtimeMode } from 'firestorable';
 import { computed, reaction } from 'mobx';
+import type firebase from 'firebase';
 
 import type { AppStore } from '../../app/store';
 import { sortCards } from '../../cards';
