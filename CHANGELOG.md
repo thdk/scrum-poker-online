@@ -5,7 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v0.4.1](https://github.com/thdk/scrum-poker-online/compare/v0.4.0...v0.4.1)
+## [v0.4.2](https://github.com/thdk/scrum-poker-online/compare/v0.4.1...v0.4.2)
+
+### Commits
+
+- chore: change icons and page title [`b10ffd0`](https://github.com/thdk/scrum-poker-online/commit/b10ffd0550e663cbd62aa9e0397c3ddb1914c23a)
+- feat: truncate player names [`12530f2`](https://github.com/thdk/scrum-poker-online/commit/12530f24cb19a2bb495233b15def2dfa2485a890)
+
+## [v0.4.1](https://github.com/thdk/scrum-poker-online/compare/v0.4.0...v0.4.1) - 2021-01-30
 
 ### Commits
 
