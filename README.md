@@ -1,10 +1,14 @@
-## Scrum poker online
+<img align="left" src="public/images/logo64.png" />
+
+## Scrum Poker Online
 
 ![Cloud Build](https://storage.googleapis.com/scrum-poker-online-badges/builds/scrum-poker-online/branches/master.svg)
 
+
 Play scrum poker online with your scrum team. Simply join an existing session or create a new session code and share it with your team members.
 
-[**Start playing scrum poker here**](https://scrum-poker-31315.web.app/)
+
+[**Click to play scrum poker online**](https://scrum-poker-31315.web.app/)
 
 Build with [firestorable](https://github.com/thdk/firestorable).
 
@@ -59,3 +63,7 @@ Builds the app for production and deploys it to firebase hosting site if a site 
 
 ### `npm run serve`
 Similator to `npm run emulators` but this one will only start the hosting emulator so that firestore request will be made to the real firestore data.
+
+## Credits
+
+<a href="https://iconscout.com/icons/game" target="_blank">Game Icon</a> by <a href="https://iconscout.com/contributors/mcgandhi61">Mohit Gandhi</a> on <a href="https://iconscout.com">Iconscout</a>
