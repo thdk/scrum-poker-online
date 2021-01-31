@@ -75,6 +75,16 @@ export class PlayerStore extends CrudStore<IPlayer, IPlayerData> {
       .some((p) => p.data!.value === undefined);
   }
 
+  @computed
+  public get numberOfFields() {
+    return this.fieldPlayers.reduce((p, c) => {
+      if (c.length) {
+        p += 1;
+      }
+      return p;
+    }, 0);
+  }
+
   public savePlayer(data: Partial<IPlayer>) {
     this.updatePlayerAsync(data);
   }

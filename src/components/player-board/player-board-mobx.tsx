@@ -43,7 +43,7 @@ export const PlayerBoardMobx = observer(({
           {session}
         </h2>
         <div
-          className="player-boards"
+          className={`player-boards player-boards-${playerStore.numberOfFields}`}
         >
           {
             playerStore.fieldPlayersSorted.map((players, i) => (

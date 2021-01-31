@@ -27,9 +27,12 @@ export function PlayerBoard({
               ? <>[v]</>
               : <>[x]</>;
 
-            const styles = classNames({
-              'player-board-rank--value': p.data!.value !== undefined,
-            });
+            const styles = classNames(
+              'player-board-rank',
+              {
+                'player-board-rank--value': p.data!.value !== undefined,
+              },
+            );
 
             return (
               <div
