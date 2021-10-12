@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v0.4.2](https://github.com/thdk/scrum-poker-online/compare/v0.4.1...v0.4.2)
+## [v0.5.0](https://github.com/thdk/scrum-poker-online/compare/v0.4.2...v0.5.0)
+
+### Commits
+
+- chore: upgrade firestorable with mobx6 and firebase modular api [`0873b2e`](https://github.com/thdk/scrum-poker-online/commit/0873b2e8f07a4b78ea1131ff0a4b5556c3a40b96)
+- style: rename useStore to useAppStore [`d4c85fd`](https://github.com/thdk/scrum-poker-online/commit/d4c85fdbed730b32ae804d244cf7edfc1a10dc18)
+- fix: always show non numeric scores on top of scoreboard [`11e27aa`](https://github.com/thdk/scrum-poker-online/commit/11e27aa576c914972425654c6f6e02a0e8f1a350)
+
+## [v0.4.2](https://github.com/thdk/scrum-poker-online/compare/v0.4.1...v0.4.2) - 2021-01-31
 
 ### Commits
 
