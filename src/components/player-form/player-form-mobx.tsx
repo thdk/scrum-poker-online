@@ -7,10 +7,10 @@ import { PlayerForm } from './player-form';
 import { IPlayer } from '../../modules/player/types';
 
 import './player-form.css';
-import { useStore } from '../../modules/app/use-app-store';
+import { useAppStore } from '../../modules/app/use-app-store';
 
 const PlayerFormContainer = () => {
-  const store = useStore();
+  const store = useAppStore();
 
   const history = useHistory();
   const { playerStore } = store;

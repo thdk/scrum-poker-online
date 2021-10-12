@@ -1,7 +1,7 @@
-import { useStore } from '../app/use-app-store';
+import { useAppStore } from '../app/use-app-store';
 
 export const useAuthStore = () => {
-  const store = useStore();
+  const store = useAppStore();
 
   return store.authStore;
 };
