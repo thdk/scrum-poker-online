@@ -136,13 +136,6 @@ module.exports = function(webpackEnv) {
   };
 
   return {
-    externals: {
-      "firebase": "root firebase",
-      "firebase/app": "root firebase",
-      "firebase/firestore": "root firebase",
-      "firebase/auth": "root firebase",
-      "firebase/functions": "root firebase",
-   },
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
     // Stop compilation early in production
     bail: isEnvProduction,

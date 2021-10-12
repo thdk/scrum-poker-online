@@ -1,5 +1,3 @@
-import firebase from 'firebase/app';
-
 import { IPlayer } from '../types';
 
 export function serializePlayer(player: Partial<IPlayer> | null) {
@@ -18,6 +16,5 @@ export function serializePlayer(player: Partial<IPlayer> | null) {
     ...otherProps,
     value: newValue,
     session: newSession,
-    modified: firebase.firestore.FieldValue.serverTimestamp(),
   };
 }

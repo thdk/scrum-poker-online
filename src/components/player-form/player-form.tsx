@@ -3,7 +3,7 @@ import {
   useCallback, useState, useMemo, useEffect,
 } from 'react';
 import copy from 'copy-to-clipboard';
-import firebase from 'firebase/app';
+import { getAuth, signOut } from 'firebase/auth';
 import { IPlayer } from '../../modules/player/types';
 
 import { Content } from '../content';
@@ -78,7 +78,7 @@ export const PlayerForm = (props: PlayerFormProps) => {
   ]);
 
   const handleLogout = useCallback(() => {
-    firebase.auth().signOut();
+    signOut(getAuth());
   }, []);
   const ShareLink = useMemo(() => ({ sessionCode }: { sessionCode: string }) => {
     if (!sessionCode) return null;

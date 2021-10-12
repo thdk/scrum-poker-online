@@ -1,7 +1,9 @@
 import { CrudStore, Doc, RealtimeMode } from 'firestorable';
 import { computed, reaction } from 'mobx';
-import type firebase from 'firebase';
 
+import {
+  Firestore, query, where,
+} from 'firebase/firestore';
 import type { AppStore } from '../../app/store';
 import { sortCards } from '../../cards';
 import { deserializePlayer } from '../serialization/deserializer';
@@ -13,7 +15,7 @@ export class PlayerStore extends CrudStore<IPlayer, IPlayerData> {
 
   constructor(
     appStore: AppStore,
-    firestore: firebase.firestore.Firestore,
+    firestore: Firestore,
   ) {
     super({
       collection: 'players',
@@ -30,7 +32,7 @@ export class PlayerStore extends CrudStore<IPlayer, IPlayerData> {
 
     reaction(() => this.player, (player) => {
       this.collection.query = player?.session !== undefined
-        ? (ref) => ref.where('session', '==', player.session)
+        ? (ref: any) => query(ref, where('session', '==', player.session))
         : null;
     });
   }
