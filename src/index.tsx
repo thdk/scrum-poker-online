@@ -6,11 +6,17 @@ import App from './components/app';
 import * as serviceWorker from './serviceWorker';
 
 import 'firebase/auth';
+import { FirebaseProvider } from './modules/firebase/firebase-provider';
+import { StoreProvider } from './modules/app/store/app-store-context';
 
 ReactDOM.render(
-  <Router>
-    <App />
-  </Router>,
+  <FirebaseProvider>
+    <StoreProvider>
+      <Router>
+        <App />
+      </Router>
+    </StoreProvider>
+  </FirebaseProvider>,
   document.getElementById('root'),
 );
 

@@ -16,24 +16,39 @@ Build with [firestorable](https://github.com/thdk/firestorable).
 
 # Contribute
 
-## Setup firebase project
-To run your own version of this application, you'll need your own firebase project.
+## Firebase project
 
-Once you have a firebase project. Link it with this application.
+Create a new firebase project or ask another contributor to join an existing firebase project.
 
+## Configure firebase project
+
+You have two options to set up firebase with this app.
+
+### 1. auto config
 First make sure you are authenticated with firebase.
 `firebase login`
 
 Next, use your desired firebase project by running the following in the terminal.
 `firebase use --add`
 
+Now, launch the firebase hosting emulator.
+
+`npm run serve`
+
+### 2. manual config
+
+Create a `.env` file with your firebase secrets from the firebase console.
+
+```
+# .env
+REACT_APP_FIREBASE_API_KEY=
+REACT_APP_FIREBASE_PROJECT_ID=
+REACT_APP_FIREBASE_AUTH_DOMAIN=
+```
+
 ## Available scripts
 
 In the project directory, you can run:
-
-### `npm run emulators`
-This will start the firebase **hosting** and **firestore** emulator.
-
 ### `npm start`
 
 Runs the app in the development mode.<br />
@@ -41,6 +56,11 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
+
+Note: if your are using the 'auto config' setup mentioned above, you must have the emulator running in another terminal.
+
+### `npm run emulators`
+This will start the firebase **hosting** and **firestore** emulator.
 
 ### `npm test`
 

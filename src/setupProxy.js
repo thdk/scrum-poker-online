@@ -2,8 +2,8 @@
 // Extra for CRA 2+: https://stackoverflow.com/a/52620241
 
 const proxy = require('http-proxy-middleware');
-module.exports = function(app) {
-    app.use(proxy('/__',
-        { target: 'http://localhost:5000/' }
-    ));
-}
+
+module.exports = function proxyFn(app) {
+  app.use(proxy('/__',
+    { target: 'http://localhost:5000/' }));
+};
