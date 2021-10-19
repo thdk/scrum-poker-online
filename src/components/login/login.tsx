@@ -2,6 +2,7 @@ import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
 import React, { useCallback, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { GoogleLoginButton } from 'react-social-login-buttons';
 import { useAuthenticatedUser } from '../../modules/auth';
 import { useAppStore } from '../../modules/app/use-app-store';
 
@@ -61,16 +62,13 @@ export const Login = () => {
         alignItems: 'center',
       }}
     >
-      <button
-        type="button"
+      <GoogleLoginButton
         onClick={onClick}
         style={{
           height: '30px',
+          width: '220px',
         }}
-      >
-        Login
-
-      </button>
+      />
     </div>
   );
 };
