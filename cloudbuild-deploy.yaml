@@ -3,7 +3,7 @@ steps:
   entrypoint: "npm"
   args: ['ci']
 - name: 'gcr.io/$PROJECT_ID/firebase'
-  args: ['deploy', "--project", "$_FIREBASE_PROJECT_ID", "--token", "$_FIREBASE_TOKEN"]
+  args: ['deploy', "--project", "$_FIREBASE_PROJECT_ID"]
   env:
     - 'REACT_APP_FIREBASE_API_KEY=${_FIREBASE_API_KEY}'
     - 'REACT_APP_FIREBASE_AUTH_DOMAIN=${_FIREBASE_AUTH_DOMAIN}'
