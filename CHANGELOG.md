@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v0.5.1](https://github.com/thdk/scrum-poker-online/compare/v0.5.0...v0.5.1)
+## [v0.6.0](https://github.com/thdk/scrum-poker-online/compare/v0.5.1...v0.6.0)
+
+### Commits
+
+- feat: allow to run the app both on firebase hosting and other hosting options [`976c2fc`](https://github.com/thdk/scrum-poker-online/commit/976c2fcabd1a780e512cc37399751fae67ba34e4)
+- feat: add page to manage players in a session [`8264264`](https://github.com/thdk/scrum-poker-online/commit/8264264b09a5dff88d11eea5fe1ab0b3eb728903)
+- feat: add styling to google login button [`a2133ee`](https://github.com/thdk/scrum-poker-online/commit/a2133ee421f35d4b0f56de46ec639c1e09d28e29)
+
+## [v0.5.1](https://github.com/thdk/scrum-poker-online/compare/v0.5.0...v0.5.1) - 2021-10-12
 
 ### Commits
 
