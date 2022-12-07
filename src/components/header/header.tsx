@@ -23,5 +23,11 @@ export const Header = () => (
     >
       SETTINGS
     </Link>
+    <Link
+      to="/players"
+      className="header__link"
+    >
+      PLAYERS
+    </Link>
   </div>
 );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import './app.css';
 import {
   Switch,
@@ -10,6 +10,31 @@ import { GamePage } from '../../pages/game';
 import { SettingsPage } from '../../pages/settings';
 import { LoginPage } from '../../pages/login';
 import { TvPage } from '../../pages/tv';
+import { PlayerPage } from '../../pages/players';
+import { useAuthenticatedUser } from '../../modules/auth';
+
+const AuthenticatedRoute = ({
+  children,
+  requireSession = true,
+}: PropsWithChildren<{
+  requireSession?: boolean
+}>) => {
+  const user = useAuthenticatedUser();
+
+  // eslint-disable-next-line no-console
+  console.log({
+    user,
+  });
+  if (!user) {
+    return <Redirect to="/login" />;
+  }
+
+  if (!user.session && requireSession) {
+    return <Redirect to="/settings" />;
+  }
+
+  return <>{children}</>;
+};
 
 export function App() {
   return (
@@ -17,19 +42,34 @@ export function App() {
       <Header />
       <Switch>
         <Route exact path="/">
-          <Redirect to="/game" />
+          <AuthenticatedRoute>
+            <Redirect to="/game" />
+          </AuthenticatedRoute>
         </Route>
         <Route path="/login">
           <LoginPage />
         </Route>
         <Route path="/game">
-          <GamePage />
+          <AuthenticatedRoute>
+            <GamePage />
+          </AuthenticatedRoute>
         </Route>
         <Route path="/settings">
-          <SettingsPage />
+          <AuthenticatedRoute
+            requireSession={false}
+          >
+            <SettingsPage />
+          </AuthenticatedRoute>
         </Route>
         <Route path="/tv">
-          <TvPage />
+          <AuthenticatedRoute>
+            <TvPage />
+          </AuthenticatedRoute>
+        </Route>
+        <Route path="/players">
+          <AuthenticatedRoute>
+            <PlayerPage />
+          </AuthenticatedRoute>
         </Route>
       </Switch>
     </>

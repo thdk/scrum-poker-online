@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
+import { reaction } from 'mobx';
 
 import { useHistory } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
@@ -33,11 +34,14 @@ const PlayerFormContainer = () => {
     (data: Partial<IPlayer>) => {
       playerStore.savePlayer({
         ...data,
+        // reset vote value when player switches to another session
         value: playerStore.player?.session === data.session
           ? playerStore.player?.value
           : undefined,
       });
-      history.push('/game');
+      reaction(() => playerStore.player, () => {
+        history.push('/game');
+      });
     },
     [
       history,

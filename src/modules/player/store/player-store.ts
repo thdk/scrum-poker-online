@@ -43,6 +43,11 @@ export class PlayerStore extends CrudStore<IPlayer, IPlayerData> {
   }
 
   @computed
+  public get allPlayers() {
+    return this.collection.docs;
+  }
+
+  @computed
   public get fieldPlayers() {
     return this.collection.docs.reduce((p, c) => {
       if (c.data && !c.data?.isSparePlayer) {

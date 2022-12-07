@@ -22,21 +22,6 @@ Create a new firebase project or ask another contributor to join an existing fir
 
 ## Configure firebase project
 
-You have two options to set up firebase with this app.
-
-### 1. auto config
-First make sure you are authenticated with firebase.
-`firebase login`
-
-Next, use your desired firebase project by running the following in the terminal.
-`firebase use --add`
-
-Now, launch the firebase hosting emulator.
-
-`npm run serve`
-
-### 2. manual config
-
 Create a `.env` file with your firebase secrets from the firebase console.
 
 ```
@@ -44,6 +29,12 @@ Create a `.env` file with your firebase secrets from the firebase console.
 REACT_APP_FIREBASE_API_KEY=
 REACT_APP_FIREBASE_PROJECT_ID=
 REACT_APP_FIREBASE_AUTH_DOMAIN=
+```
+
+Then start the application without using any firbase emulators.
+
+```sh
+npm run start
 ```
 
 ## Available scripts

@@ -33,7 +33,7 @@ export const PlayerBoardMobx = observer(({
   }, [playerStore]);
 
   const session = playerStore.player?.session;
-  return session
+  return session !== undefined
     ? (
       <>
         <h2
